@@ -49,15 +49,34 @@ var resetInputs = function() {
   $('.value').val('');
 }
 
+var getGlad = function() {
+  return window.localStorage.key(Math.floor(Math.random() * window.localStorage.length));
+}
+
+var checkSame = function(winner) {
+  var loser = getGlad();
+  if (winner === loser) {
+    return checkSame(winner)
+  }
+  return loser;
+}
+
+var startFight = function () {
+
+
+}
+
+
 $(document).ready(function() {
   showDatabaseContents();
 
   $('.create').click(function() {
     if (getKeyInput() !== '' && getValueInput() !== '') {
       if (keyExists(getKeyInput())) {
-        if(confirm('key already exists in database, do you want to update instead?')) {
+        if(confirm('Gladiator already exists, do you want to update weapon?')) {
           updateItem(getKeyInput(), getValueInput());
           showDatabaseContents();
+          resetInputs();
         }
       } else {
         createItem(getKeyInput(), getValueInput());
@@ -65,7 +84,7 @@ $(document).ready(function() {
         resetInputs();
       }
     } else  {
-      alert('key and value must not be blank');
+      alert('Please enter a name and weapon for the gladiator');
     }
   });
 
@@ -76,10 +95,10 @@ $(document).ready(function() {
         showDatabaseContents();
         resetInputs();
       } else {
-        alert('key does not exist in database');
+        alert('Gladiator does not exist');
       }
     } else {
-      alert('key and value must not be blank');
+      alert('Please enter a name and weapon for the gladiator');
     }
   });
 
@@ -90,21 +109,48 @@ $(document).ready(function() {
         showDatabaseContents();
         resetInputs();
       } else {
-        alert('key does not exist in database');
+        alert('Gladiator does not exist');
       }
     } else {
-      alert('key must not be blank');
+      alert('Enter the name of the gladiator you wish to retire');
     }
   });
 
-  $('.reset').click(function() {
-    resetInputs();
-  })
+  // $('.reset').click(function() {
+  //   resetInputs();
+  // })
 
   $('.clear').click(function() {
-    if (confirm('WARNING: Are you sure you want to clear the database? \n                THIS ACTION CANNOT BE UNDONE')) {
-      clearDatabase();
-      showDatabaseContents();
+    clearDatabase();
+    showDatabaseContents();
+  })
+
+  ///FIght
+  //Acquire 2 random gladiators
+  //display message Gladiator 1 kills gladiator 2
+  //delete glad 2
+
+
+
+  $('.fight').click(function() {
+    if(window.localStorage.length === 0) {
+      alert('Please create gladiators to fight in the arena!')
+    } else {
+    var winner = getGlad();
+      if (window.localStorage.length === 1) {
+        console.log(`${winner} is the champion!`)
+      // $('.announcement').text(`${winner} is the champion!`)   
+      } else {
+        var loser = checkSame(winner);
+        console.log(`${winner} killed ${loser} with ${window.localStorage.getItem(winner)}!`)
+        deleteItem(loser);
+        showDatabaseContents();
+        // $('.announcement').text(`${winner} killed ${loser} with ${window.localStorage.getItem(winner)}!`)
+          if (window.localStorage.length === 1) {
+            console.log(`${winner} is the champion!`)
+            // $('.announcement').text(`${winner} is the champion!`)
+          }
+      }
     }
   })
 })
