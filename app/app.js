@@ -70,6 +70,29 @@ var startFight = function () {
 $(document).ready(function() {
   showDatabaseContents();
 
+
+// var e = jQuery.Event("keydown"); //enter is an event
+// e.which = 13; // keycode for the enter key
+//   $('.input-group-text').keypress(e, function () { //same functionality as clicking
+//     console.log('something')
+//     if (getKeyInput() !== '' && getValueInput() !== '') {
+//       if (keyExists(getKeyInput())) {
+//         if(confirm('Gladiator already exists, do you want to update weapon?')) {
+//           updateItem(getKeyInput(), getValueInput());
+//           showDatabaseContents();
+//           resetInputs();
+//         }
+//       } else {
+//         createItem(getKeyInput(), getValueInput());
+//         showDatabaseContents();
+//         resetInputs();
+//       }
+//     } else  {
+//       alert('Please enter a name and weapon for the gladiator');
+//     }
+//   });
+
+
   $('.create').click(function() {
     if (getKeyInput() !== '' && getValueInput() !== '') {
       if (keyExists(getKeyInput())) {
@@ -139,16 +162,16 @@ $(document).ready(function() {
     var winner = getGlad();
       if (window.localStorage.length === 1) {
         console.log(`${winner} is the champion!`)
-      // $('.announcement').text(`${winner} is the champion!`)   
+        $('.display-4').text(`${winner} is the champion!`)   
       } else {
         var loser = checkSame(winner);
         console.log(`${winner} killed ${loser} with ${window.localStorage.getItem(winner)}!`)
         deleteItem(loser);
         showDatabaseContents();
-        // $('.announcement').text(`${winner} killed ${loser} with ${window.localStorage.getItem(winner)}!`)
+        $('.lead1').append(`<p class="lead">${winner} killed ${loser} with ${window.localStorage.getItem(winner)}!</p>`)
           if (window.localStorage.length === 1) {
             console.log(`${winner} is the champion!`)
-            // $('.announcement').text(`${winner} is the champion!`)
+            $('.display-4').text(`${winner} is the champion!`)
           }
       }
     }

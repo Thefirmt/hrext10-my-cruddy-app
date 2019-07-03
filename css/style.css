@@ -14,3 +14,10 @@ https://getbootstrap.com/docs/4.3/getting-started/introduction/
 //Add ability to inherit loser's weapon (maybe instead upgrade your own)
 	//possibly have this enhance victory chances
 */
+.display-4 {
+	text-align: center;
+}
+
+.lead1 {
+	text-align: center;
+}
