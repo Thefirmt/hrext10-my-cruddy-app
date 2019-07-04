@@ -8,11 +8,11 @@
 
 //localStorage functions
 var createItem = function(key, value) {
-  return window.localStorage.setItem(key, value);
+  return window.localStorage.setItem(key, value.toLowerCase());
 }
 
 var updateItem = function(key, value) {
-  return window.localStorage.setItem(key, value);
+  return window.localStorage.setItem(key, value.toLowerCase());
 }
 
 var deleteItem = function(key) {
@@ -61,10 +61,11 @@ var checkSame = function(winner) {
   return loser;
 }
 
-var startFight = function () {
-
-
-}
+var randomVerb = function(array){
+  var randomIndex = Math.floor(Math.random() * array.length);
+  return array[randomIndex];
+};
+var verbs = ['decimated', 'annihilated', 'eviscerated', 'destroyed', 'slayed', 'eliminated', 'deleted', 'banished', 'abolished', 'pummeled', 'vaporized', 'minced', 'smooshed', 'smashed', 'assassinated', 'slaughtered', 'eradicated', 'neutralized', 'obliterated', 'wasted', 'dispatched', 'smothered', 'suffocated', 'wiped out', 'exterminated', 'finished', 'ended'];
 
 
 $(document).ready(function() {
@@ -165,10 +166,10 @@ $(document).ready(function() {
         $('.display-4').text(`${winner} is the champion!`)   
       } else {
         var loser = checkSame(winner);
-        console.log(`${winner} killed ${loser} with ${window.localStorage.getItem(winner)}!`)
+        console.log(`${winner} ${{randomVerb}} ${loser} with ${window.localStorage.getItem(winner)}!`)
         deleteItem(loser);
         showDatabaseContents();
-        $('.lead1').append(`<p class="lead">${winner} killed ${loser} with ${window.localStorage.getItem(winner)}!</p>`)
+        $('.lead1').append(`<p class="lead">${winner} ${randomVerb(verbs)} ${loser} with a ${window.localStorage.getItem(winner)}!</p>`)
           if (window.localStorage.length === 1) {
             console.log(`${winner} is the champion!`)
             $('.display-4').text(`${winner} is the champion!`)
