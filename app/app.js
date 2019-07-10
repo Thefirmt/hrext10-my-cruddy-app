@@ -35,9 +35,22 @@ var showDatabaseContents = function() {
     var key = window.localStorage.key(i);
     var weapon = JSON.parse(localStorage.getItem("names"))
     if (!key.includes('HP')) {
-          $('tbody').append(`<tr><td>${key}</td><td>${JSON.parse(window.localStorage.getItem(key))[0]}</td><td>${JSON.parse(window.localStorage.getItem(key))[1]}</td></tr>`)
+          $('tbody').append(`<tr><td>${key}</td>
+            <td>${JSON.parse(window.localStorage.getItem(key))[0]}</td>
+            <td>${healthBar(key)}</td></tr>`)
     }
   }
+}
+
+var healthBar = function(key) {
+  var currentHP = JSON.parse(window.localStorage.getItem(key))[1]
+  var percentHP = currentHP*10
+  if (percentHP >50) {
+    return `<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${percentHP}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">${JSON.parse(window.localStorage.getItem(key))[1]}</div></div>`;
+  } else if (percentHP > 20) {
+    return `<div class="progress"><div class="progress-bar bg-warning" role="progressbar" style="width: ${percentHP}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">${JSON.parse(window.localStorage.getItem(key))[1]}</div></div>`;
+  }
+    return `<div class="progress"><div class="progress-bar bg-danger" role="progressbar" style="width: ${percentHP}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">${JSON.parse(window.localStorage.getItem(key))[1]}</div></div>`;
 }
 
 var keyExists = function(key) {
@@ -101,6 +114,13 @@ var getType = function() {
   }
 }
 
+var keepSize = function() {
+  var leadVar = document.body.getElementsByClassName('lead')
+  if (leadVar.length > 6) {
+    leadVar[0].remove()
+  }
+}
+
 var light = true;
 var medium = false;
 var heavy = false;
@@ -108,8 +128,6 @@ var heavy = false;
 //POSSIBLY UNFINISHED CODE FOR DAMAGE FOMRULA
 var loseHP = function(winner, loser) {
   var dmg = Math.floor(Math.random()*weaponDMG(winner)) + 1
-  console.log(dmg)
-  console.log(weaponDMG(winner))
   var loserHP = JSON.parse(window.localStorage.getItem(loser))[1];
   if (loserHP > dmg) {
     $('.lead1').append(`<p class="lead">${winner} attacked ${loser} with a ${JSON.parse(window.localStorage.getItem(winner))[0]} for ${dmg} damage!</p>`)
@@ -185,21 +203,18 @@ $(document).ready(function() {
     light = true;
     medium  = false;
     heavy = false;
-    console.log(`light was clicked  Light:${light} medium:${medium} heavy:${heavy}`)
   })
 
   $('#medium-btn').click(function(){
     light = false;
     medium  = true;
     heavy = false;
-    console.log(`mediumt was clicked  Light:${light} medium:${medium} heavy:${heavy}`)
   })
 
   $('#heavy-btn').click(function(){
     light = false;
     medium  = false;
     heavy = true;
-    console.log(`heavy was clicked  Light:${light} medium:${medium} heavy:${heavy}`)
   })
   // $('.reset').click(function() {
   //   resetInputs();
@@ -229,6 +244,7 @@ $(document).ready(function() {
         // deleteItem(loser);
         loseHP(winner, loser);
         showDatabaseContents();
+        keepSize();
           if (window.localStorage.length === 1) {
             $('.display-4').text(`${winner} is the champion!`)
           }
