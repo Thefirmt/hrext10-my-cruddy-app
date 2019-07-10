@@ -75,19 +75,20 @@ var checkSame = function(winner) {
 }
 
 //UNFINISHED WEAPON DAMAGE CODE FOR CATEGORY
-var weaponDMG = function() {
-  var type = JSON.parse(window.localStorage.getItem(key))[]
-  if('light') {
-    return 2;
-  }
-  if('medium') {
+var weaponDMG = function(winner) {
+  var type = JSON.parse(window.localStorage.getItem(winner))[2]
+  if(type === 'light') {
     return 3;
   }
-  if('heavy') {
+  if(type === 'medium') {
     return 5;
+  }
+  if(type === 'heavy') {
+    return 7;
   }
 }
 
+//Null weapon type bug
 var getType = function() {
     if(light) {
     return 'light';
@@ -100,18 +101,25 @@ var getType = function() {
   }
 }
 
-var light = false;
+var light = true;
 var medium = false;
 var heavy = false;
 
 //POSSIBLY UNFINISHED CODE FOR DAMAGE FOMRULA
-var loseHP = function(loser) {
-  var dmg = Math.floor(Math.random()*weaponDMG)
-  var loserHP = window.localStorage.getItem(loser+'HP');
-  if (Number(loserHP > dmg)){
-    window.localStorage.setItem(loser+'HP', (loserHP - dmg));
+var loseHP = function(winner, loser) {
+  var dmg = Math.floor(Math.random()*weaponDMG(winner)) + 1
+  console.log(dmg)
+  console.log(weaponDMG(winner))
+  var loserHP = JSON.parse(window.localStorage.getItem(loser))[1];
+  if (loserHP > dmg) {
+    $('.lead1').append(`<p class="lead">${winner} attacked ${loser} with a ${JSON.parse(window.localStorage.getItem(winner))[0]} for ${dmg} damage!</p>`)
+    var damagedLoser = JSON.parse(window.localStorage.getItem(loser))
+    damagedLoser[1] -= dmg;
+    console.log(damagedLoser)
+    window.localStorage.setItem(loser, JSON.stringify(damagedLoser));
   } else {
-    return true;
+   $('.lead1').append(`<p class="lead" style="color:red;font-weight:600">${winner} has ${randomVerb(verbs)} ${loser} with ${dmg} damage from their ${JSON.parse(window.localStorage.getItem(winner))[0]}!!</p>`)
+    deleteItem(loser);
   }
 }
 
@@ -215,14 +223,12 @@ $(document).ready(function() {
     } else {
     var winner = getGlad();
       if (window.localStorage.length === 1) {
-        console.log(`${winner} is the champion!`)
         $('.display-4').text(`${winner} is the champion!`)   
       } else {
         var loser = checkSame(winner);
-        console.log(loser);
         // deleteItem(loser);
+        loseHP(winner, loser);
         showDatabaseContents();
-        $('.lead1').append(`<p class="lead">${winner} ${randomVerb(verbs)} ${loser} with a ${window.localStorage.getItem(winner)}!</p>`)
           if (window.localStorage.length === 1) {
             $('.display-4').text(`${winner} is the champion!`)
           }
