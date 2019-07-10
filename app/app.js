@@ -6,13 +6,18 @@
 
 */
 
+
 //localStorage functions
 var createItem = function(key, value) {
-  return window.localStorage.setItem(key, value.toLowerCase());
+  var stats = [value.toLowerCase(), 10, getType()]
+  return window.localStorage.setItem(key, JSON.stringify(stats));
 }
 
 var updateItem = function(key, value) {
-  return window.localStorage.setItem(key, value.toLowerCase());
+  var prevStat = JSON.parse(window.localStorage.getItem(key))
+  prevStat[0] = value.toLowerCase();
+  prevStat[2] = getType();
+  return window.localStorage.setItem(key, JSON.stringify(prevStat));
 }
 
 var deleteItem = function(key) {
@@ -28,7 +33,10 @@ var showDatabaseContents = function() {
 
   for (var i = 0; i < window.localStorage.length; i++) {
     var key = window.localStorage.key(i);
-    $('tbody').append(`<tr><td>${key}</td><td>${window.localStorage.getItem(key)}</td></tr>`)
+    var weapon = JSON.parse(localStorage.getItem("names"))
+    if (!key.includes('HP')) {
+          $('tbody').append(`<tr><td>${key}</td><td>${JSON.parse(window.localStorage.getItem(key))[0]}</td><td>${JSON.parse(window.localStorage.getItem(key))[1]}</td></tr>`)
+    }
   }
 }
 
@@ -50,7 +58,12 @@ var resetInputs = function() {
 }
 
 var getGlad = function() {
-  return window.localStorage.key(Math.floor(Math.random() * window.localStorage.length));
+  var notHP = window.localStorage.key(Math.floor(Math.random() * window.localStorage.length));
+  if (!notHP.includes('HP')) {
+    return notHP;
+  } else {
+    return getGlad();
+  }
 }
 
 var checkSame = function(winner) {
@@ -59,6 +72,47 @@ var checkSame = function(winner) {
     return checkSame(winner)
   }
   return loser;
+}
+
+//UNFINISHED WEAPON DAMAGE CODE FOR CATEGORY
+var weaponDMG = function() {
+  var type = JSON.parse(window.localStorage.getItem(key))[]
+  if('light') {
+    return 2;
+  }
+  if('medium') {
+    return 3;
+  }
+  if('heavy') {
+    return 5;
+  }
+}
+
+var getType = function() {
+    if(light) {
+    return 'light';
+  }
+  if(medium) {
+    return 'medium';
+  }
+  if(heavy) {
+    return 'heavy';
+  }
+}
+
+var light = false;
+var medium = false;
+var heavy = false;
+
+//POSSIBLY UNFINISHED CODE FOR DAMAGE FOMRULA
+var loseHP = function(loser) {
+  var dmg = Math.floor(Math.random()*weaponDMG)
+  var loserHP = window.localStorage.getItem(loser+'HP');
+  if (Number(loserHP > dmg)){
+    window.localStorage.setItem(loser+'HP', (loserHP - dmg));
+  } else {
+    return true;
+  }
 }
 
 var randomVerb = function(array){
@@ -71,27 +125,6 @@ var verbs = ['decimated', 'annihilated', 'eviscerated', 'destroyed', 'slayed', '
 $(document).ready(function() {
   showDatabaseContents();
 
-
-// var e = jQuery.Event("keydown"); //enter is an event
-// e.which = 13; // keycode for the enter key
-//   $('.input-group-text').keypress(e, function () { //same functionality as clicking
-//     console.log('something')
-//     if (getKeyInput() !== '' && getValueInput() !== '') {
-//       if (keyExists(getKeyInput())) {
-//         if(confirm('Gladiator already exists, do you want to update weapon?')) {
-//           updateItem(getKeyInput(), getValueInput());
-//           showDatabaseContents();
-//           resetInputs();
-//         }
-//       } else {
-//         createItem(getKeyInput(), getValueInput());
-//         showDatabaseContents();
-//         resetInputs();
-//       }
-//     } else  {
-//       alert('Please enter a name and weapon for the gladiator');
-//     }
-//   });
 
 
   $('.create').click(function() {
@@ -140,6 +173,26 @@ $(document).ready(function() {
     }
   });
 
+  $('#light-btn').click(function(){
+    light = true;
+    medium  = false;
+    heavy = false;
+    console.log(`light was clicked  Light:${light} medium:${medium} heavy:${heavy}`)
+  })
+
+  $('#medium-btn').click(function(){
+    light = false;
+    medium  = true;
+    heavy = false;
+    console.log(`mediumt was clicked  Light:${light} medium:${medium} heavy:${heavy}`)
+  })
+
+  $('#heavy-btn').click(function(){
+    light = false;
+    medium  = false;
+    heavy = true;
+    console.log(`heavy was clicked  Light:${light} medium:${medium} heavy:${heavy}`)
+  })
   // $('.reset').click(function() {
   //   resetInputs();
   // })
@@ -166,12 +219,11 @@ $(document).ready(function() {
         $('.display-4').text(`${winner} is the champion!`)   
       } else {
         var loser = checkSame(winner);
-        console.log(`${winner} ${{randomVerb}} ${loser} with ${window.localStorage.getItem(winner)}!`)
-        deleteItem(loser);
+        console.log(loser);
+        // deleteItem(loser);
         showDatabaseContents();
         $('.lead1').append(`<p class="lead">${winner} ${randomVerb(verbs)} ${loser} with a ${window.localStorage.getItem(winner)}!</p>`)
           if (window.localStorage.length === 1) {
-            console.log(`${winner} is the champion!`)
             $('.display-4').text(`${winner} is the champion!`)
           }
       }

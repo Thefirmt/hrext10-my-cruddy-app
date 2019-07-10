@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>HREXT10 R00lz!</title>
+  <title>Cruddy Gladiator!</title>
   <script
           src="https://code.jquery.com/jquery-3.3.1.js"
           integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
           crossorigin="anonymous"></script>
+          <!-- Popper for dropdowns -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -14,19 +15,25 @@
 <body class="m-3">
   <div class="container">
     <div class="row mb-2">
-      <div class="input-group col-sm-6">
+      <div class="input-group col-sm-4">
         <div class="input-group-prepend">
           <label class="input-group-text">Name</label>
         </div>
         <input class="key form-control" type="text">
       </div>
-      <div class="input-group col-sm-6">
+      <div class="input-group col-sm-4">
         <div class="input-group-prepend">
           <label class="input-group-text">Weapon</label>
         </div>
         <input class="value form-control" type="text">
       </div>
+                      <div class="btn-group" role="group" aria-label="Basic example">
+           <button type="button" class="btn btn-primary" id="light-btn">Light</button>
+           <button type="button" class="btn btn-primary" id="medium-btn">Medium</button>
+           <button type="button" class="btn btn-primary" id="heavy-btn">Heavy</button>
+          </div>
 <!--       <button class="reset btn btn-danger btn-sm col-sm-2">Reset Input</button> -->
+       
     </div>
     <div class="row mb-3 justify-content-center">
       <button class="create btn btn-success btn-sm mr-2 col-sm-2">Create Gladiator</button>
@@ -45,6 +52,7 @@
           <tr>
             <th scope="col">Gladiators</th>
             <th scope="col">Weapon</th>
+            <th scope="col">Health</th>
           </tr>
         </thead>
         <tbody>

@@ -10,9 +10,29 @@ inputs (border swag)
 
 https://getbootstrap.com/docs/4.3/getting-started/introduction/
 
-//Add random words instead of "killed"
-//Add ability to inherit loser's weapon (maybe instead upgrade your own)
-	//possibly have this enhance victory chances
+Add random words instead of "killed"
+
+Give each gladiator an HP total that is lowered each time they are hit.
+	0 HP is death
+
+Apply weapon classes? (lght/accuracy heavy/damage medium) More creative wording.
+	possibly have them have have types that adjust the weapon damage ranges
+	->Dropdown menu
+		Have each type have it's own weapons KillVerbs
+
+ADD HP BARS?
+
+Add two hands -> allow shields/taliman
+
+allow for custom weapon creation?
+
+
+Possible status effects (damage down, poison)
+
+setTimeDelay(have them all start at the same time and have attack speed make them go faster)
+
+Add ability to inherit loser's weapon (maybe instead upgrade your own)
+	possibly have this enhance victory chances
 */
 .display-4 {
 	text-align: center;
@@ -20,4 +40,8 @@ https://getbootstrap.com/docs/4.3/getting-started/introduction/
 
 .lead1 {
 	text-align: center;
+}
+
+.row {
+	justify-content: center;
 }
