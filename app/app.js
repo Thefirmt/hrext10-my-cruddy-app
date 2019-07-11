@@ -133,10 +133,9 @@ var loseHP = function(winner, loser) {
     $('.lead1').append(`<p class="lead">${winner} attacked ${loser} with a ${JSON.parse(window.localStorage.getItem(winner))[0]} for ${dmg} damage!</p>`)
     var damagedLoser = JSON.parse(window.localStorage.getItem(loser))
     damagedLoser[1] -= dmg;
-    console.log(damagedLoser)
     window.localStorage.setItem(loser, JSON.stringify(damagedLoser));
   } else {
-   $('.lead1').append(`<p class="lead" style="color:red;font-weight:600">${winner} has ${randomVerb(verbs)} ${loser} with ${dmg} damage from their ${JSON.parse(window.localStorage.getItem(winner))[0]}!!</p>`)
+   $('.lead1').append(`<p class="lead" style="color:#710000;font-weight:600">${winner} has ${randomVerb(verbs)} ${loser} with ${dmg} damage from their ${JSON.parse(window.localStorage.getItem(winner))[0]}!!</p>`)
     deleteItem(loser);
   }
 }

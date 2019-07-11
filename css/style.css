@@ -10,24 +10,27 @@ inputs (border swag)
 
 https://getbootstrap.com/docs/4.3/getting-started/introduction/
 
-Add random words instead of "killed"
+[x]Add random words instead of "killed"
 
-Give each gladiator an HP total that is lowered each time they are hit.
+[x]Give each gladiator an HP total that is lowered each time they are hit.
 	0 HP is death
 
-Apply weapon classes? (lght/accuracy heavy/damage medium) More creative wording.
+[x]Apply weapon classes? (lght/accuracy heavy/damage medium) More creative wording.
 	possibly have them have have types that adjust the weapon damage ranges
-	->Dropdown menu
-		Have each type have it's own weapons KillVerbs
 
-ADD HP BARS?
+[X]ADD HP BARS?
 
-Add header image
+[]Add header image
+
+[]Add varying accuracy to heavier weapons
+
+[]Create custon button colors
 
 Add two hands -> allow shields/taliman
 
 allow for custom weapon creation?
 
+Have each type have it's own weapons KillVerbs
 
 Possible status effects (damage down, poison)
 
@@ -38,6 +41,7 @@ Add ability to inherit loser's weapon (maybe instead upgrade your own)
 */
 .display-4 {
 	text-align: center;
+	color: white;
 }
 
 .lead1 {
@@ -65,4 +69,134 @@ body {
 .table thead th {
 	border-bottom: 2px solid #767265;
 	border-top: 0px;
+}
+
+.jumbotron {
+/*  background-image: url("https://i.imgur.com/o1GL8o5.png");*/
+  background-image: url("https://i.imgur.com/Jwerg19.png");
+  background-size: cover;
+}
+
+.text-center {
+	padding-bottom: 10px
+}
+ 
+.btn.btn-primary {
+  background-color: #78716C;
+  color: #ffffff;
+  border-color: #78716C;
+}
+.btn.btn-primary.focus,
+.btn.btn-primary:focus {
+  color: #fff;
+  background-color: #605A56;
+  border-color: #605A56;
+  outline: none;
+  box-shadow: none;
+}
+.btn.btn-primary:hover {
+  color: #fff;
+  background-color: #605A56;
+  border-color: #605A56;
+  outline: none;
+  box-shadow: none;
+}
+.btn.btn-primary.active,
+.btn.btn-primary:active {
+  color: #fff;
+  background-color: #78716C;
+  border-color: #78716C;
+  outline: none !important;
+}
+.btn.btn-primary.active.focus,
+.btn.btn-primary.active:focus,
+.btn.btn-primary.active:hover,
+.btn.btn-primary:active.focus,
+.btn.btn-primary:active:focus,
+.btn.btn-primary:active:hover {
+  color: #fff;
+  background-color: #78716C;
+  border-color: #78716C;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.btn.btn-success {
+  background-color: #565C60;
+  color: #ffffff;
+  border-color: #565C60;
+}
+.btn.btn-success.focus,
+.btn.btn-success:focus {
+  color: #fff;
+  background-color: #454A4D;
+  border-color: #454A4D;
+  outline: none;
+  box-shadow: none;
+}
+.btn.btn-success:hover {
+  color: #fff;
+  background-color: #454A4D;
+  border-color: #454A4D;
+  outline: none;
+  box-shadow: none;
+}
+.btn.btn-success.active,
+.btn.btn-success:active {
+  color: #fff;
+  background-color: #565C60;
+  border-color: #565C60;
+  outline: none !important;
+}
+.btn.btn-success.active.focus,
+.btn.btn-success.active:focus,
+.btn.btn-success.active:hover,
+.btn.btn-success:active.focus,
+.btn.btn-success:active:focus,
+.btn.btn-success:active:hover {
+  color: #fff;
+  background-color: #565C60;
+  border-color: #565C60;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.btn.btn-danger {
+  background-color: #4D4546;
+  color: #ffffff;
+  border-color: #4D4546;
+}
+.btn.btn-danger.focus,
+.btn.btn-danger:focus {
+  color: #fff;
+  background-color: #3E3738;
+  border-color: #3E3738;
+  outline: none;
+  box-shadow: none;
+}
+.btn.btn-danger:hover {
+  color: #fff;
+  background-color: #3E3738;
+  border-color: #3E3738;
+  outline: none;
+  box-shadow: none;
+}
+.btn.btn-danger.active,
+.btn.btn-danger:active {
+  color: #fff;
+  background-color: #4D4546;
+  border-color: #4D4546;
+  outline: none !important;
+}
+.btn.btn-danger.active.focus,
+.btn.btn-danger.active:focus,
+.btn.btn-danger.active:hover,
+.btn.btn-danger:active.focus,
+.btn.btn-danger:active:focus,
+.btn.btn-danger:active:hover {
+  color: #fff;
+  background-color: #4D4546;
+  border-color: #4D4546;
+  outline: none !important;
+  box-shadow: none !important;
 }
