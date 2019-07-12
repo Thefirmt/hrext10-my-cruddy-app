@@ -87,7 +87,7 @@ var checkSame = function(winner) {
   return loser;
 }
 
-//UNFINISHED WEAPON DAMAGE CODE FOR CATEGORY
+//Weapon Damage
 var weaponDMG = function(winner) {
   var type = JSON.parse(window.localStorage.getItem(winner))[2]
   if(type === 'light') {
@@ -101,7 +101,34 @@ var weaponDMG = function(winner) {
   }
 }
 
-//Null weapon type bug
+//Miss chance for bigger weapons
+var checkMiss = function(winner) {
+  var type = JSON.parse(window.localStorage.getItem(winner))[2]
+  var m = Math.random()
+  if(type === 'heavy' && m < 0.3) {
+    return true
+  } else if (type === 'medium' && m < 0.2) {
+    return true
+  }
+  return false
+}
+
+//Crit chance for small weapons
+var checkCrit = function(winner) {
+  var type = JSON.parse(window.localStorage.getItem(winner))[2]
+  var m = Math.random()
+  if(type === 'light' && m < 0.3) {
+    return true
+  } else if (type === 'medium' && m < 0.2) {
+    return true
+  }
+  return false
+}
+
+var light = true;
+var medium = false;
+var heavy = false;
+//Weapon Type
 var getType = function() {
     if(light) {
     return 'light';
@@ -114,6 +141,7 @@ var getType = function() {
   }
 }
 
+//Causes jumbotron to only scale to 6 lines
 var keepSize = function() {
   var leadVar = document.body.getElementsByClassName('lead')
   if (leadVar.length > 6) {
@@ -121,11 +149,11 @@ var keepSize = function() {
   }
 }
 
-var light = true;
-var medium = false;
-var heavy = false;
+var missedAttack = function(winner, loser) {
+  $('.lead1').append(`<p class="lead" style="color:#605A56;font-weight:400">Miss! ${winner} attacked ${loser} with a ${JSON.parse(window.localStorage.getItem(winner))[0]} and missed!</p>`)
+}
 
-//POSSIBLY UNFINISHED CODE FOR DAMAGE FOMRULA
+//Damage formula
 var loseHP = function(winner, loser) {
   var dmg = Math.floor(Math.random()*weaponDMG(winner)) + 1
   var loserHP = JSON.parse(window.localStorage.getItem(loser))[1];
@@ -140,6 +168,22 @@ var loseHP = function(winner, loser) {
   }
 }
 
+//Crit formula
+var critAttack = function(winner, loser) {
+  var dmg = (Math.floor(Math.random()*weaponDMG(winner)) + 1) * 2
+  var loserHP = JSON.parse(window.localStorage.getItem(loser))[1];
+  if (loserHP > dmg) {
+    $('.lead1').append(`<p class="lead" style="color:#45464D;font-weight:400">Critical Hit! ${winner} attacked ${loser} with a ${JSON.parse(window.localStorage.getItem(winner))[0]} for ${dmg} damage!!</p>`)
+    var damagedLoser = JSON.parse(window.localStorage.getItem(loser))
+    damagedLoser[1] -= dmg;
+    window.localStorage.setItem(loser, JSON.stringify(damagedLoser));
+  } else {
+   $('.lead1').append(`<p class="lead" style="color:#710000;font-weight:600">Critical Hit! ${winner} has ${randomVerb(verbs)} ${loser} with a ${dmg} damage crit from their ${JSON.parse(window.localStorage.getItem(winner))[0]}!!</p>`)
+    deleteItem(loser);
+  }
+}
+
+//Kill Verbs
 var randomVerb = function(array){
   var randomIndex = Math.floor(Math.random() * array.length);
   return array[randomIndex];
@@ -241,7 +285,15 @@ $(document).ready(function() {
       } else {
         var loser = checkSame(winner);
         // deleteItem(loser);
-        loseHP(winner, loser);
+        if (!checkMiss(winner)) {
+          if (checkCrit(winner)) {
+            critAttack(winner, loser);
+          } else {
+            loseHP(winner, loser);
+          }
+        } else {
+          missedAttack(winner, loser);
+        }
         showDatabaseContents();
         keepSize();
           if (window.localStorage.length === 1) {
